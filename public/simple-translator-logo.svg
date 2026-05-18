@@ -1,0 +1,31 @@
+<svg width="1200" height="360" viewBox="0 0 1200 360" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Simple Translator</title>
+  <desc id="desc">A polished logo for an Italian and Spanish AI translator.</desc>
+  <defs>
+    <linearGradient id="mark" x1="102" y1="80" x2="286" y2="280" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1DD3B0"/>
+      <stop offset="0.5" stop-color="#F8FAFC"/>
+      <stop offset="1" stop-color="#F97316"/>
+    </linearGradient>
+    <linearGradient id="text" x1="382" y1="116" x2="950" y2="218" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAFC"/>
+      <stop offset="0.55" stop-color="#DDE7F5"/>
+      <stop offset="1" stop-color="#A7F3D0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="360" rx="42" fill="#05070A"/>
+  <path d="M0 272C146 207 276 212 420 250C564 288 704 315 872 236C1000 176 1092 171 1200 196V360H0V272Z" fill="#0D141E"/>
+  <rect x="91" y="64" width="220" height="232" rx="46" fill="#0B111A" stroke="#243244" stroke-width="4"/>
+  <path d="M140 121H232C250.225 121 265 135.775 265 154V158C265 176.225 250.225 191 232 191H205L168 229V191H140C121.775 191 107 176.225 107 158V154C107 135.775 121.775 121 140 121Z" fill="url(#mark)"/>
+  <path d="M156 149H218" stroke="#07111F" stroke-width="10" stroke-linecap="round"/>
+  <path d="M156 170H199" stroke="#07111F" stroke-width="10" stroke-linecap="round"/>
+  <path d="M241 139L273 107M273 107H249M273 107V131" stroke="#F8FAFC" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="382" y="165" fill="url(#text)" font-family="Inter, SF Pro Display, Segoe UI, Arial, sans-serif" font-size="66" font-weight="800">Simple Translator</text>
+  <text x="386" y="218" fill="#94A3B8" font-family="Inter, SF Pro Text, Segoe UI, Arial, sans-serif" font-size="27" font-weight="500">Italian and Spanish, translated with context.</text>
+  <rect x="386" y="247" width="105" height="34" rx="17" fill="#111B27" stroke="#263449"/>
+  <text x="410" y="269" fill="#A7F3D0" font-family="Inter, SF Pro Text, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700">Italian</text>
+  <rect x="506" y="247" width="112" height="34" rx="17" fill="#111B27" stroke="#263449"/>
+  <text x="529" y="269" fill="#FED7AA" font-family="Inter, SF Pro Text, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700">Spanish</text>
+  <rect x="633" y="247" width="132" height="34" rx="17" fill="#111B27" stroke="#263449"/>
+  <text x="656" y="269" fill="#BFDBFE" font-family="Inter, SF Pro Text, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700">Gemini AI</text>
+</svg>

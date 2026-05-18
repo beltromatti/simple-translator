@@ -2,12 +2,13 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import LanguageToggle from '@/components/LanguageToggle';
-import useDebounce from '@/hooks/useDebounce';
 
 type SamplePrompt = {
   text: string;
   direction: boolean; // true = IT → ES, false = ES → IT
 };
+
+const CLIENT_ID_STORAGE_KEY = 'simple-translator-client-id';
 
 const samplePrompts: SamplePrompt[] = [
   { text: 'Sto cercando un ristorante intimo per festeggiare un anniversario.', direction: true },
@@ -17,7 +18,6 @@ const samplePrompts: SamplePrompt[] = [
 
 export default function Home() {
   const [inputText, setInputText] = useState('');
-  const debouncedInputText = useDebounce(inputText, 450);
   const [translatedText, setTranslatedText] = useState('');
   const [idioms, setIdioms] = useState<string[]>([]);
   const [description, setDescription] = useState('');
@@ -25,9 +25,29 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const trimmedInput = useMemo(() => debouncedInputText.trim(), [debouncedInputText]);
+  const trimmedInput = useMemo(() => inputText.trim(), [inputText]);
   const charCount = useMemo(() => inputText.trim().length, [inputText]);
   const currentDirectionLabel = isItalianToSpanish ? 'Italian → Spanish' : 'Spanish → Italian';
+
+  const getClientId = () => {
+    if (typeof window === 'undefined') {
+      return 'server';
+    }
+
+    const existing = window.localStorage.getItem(CLIENT_ID_STORAGE_KEY);
+
+    if (existing) {
+      return existing;
+    }
+
+    const generated =
+      typeof window.crypto?.randomUUID === 'function'
+        ? window.crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+    window.localStorage.setItem(CLIENT_ID_STORAGE_KEY, generated);
+    return generated;
+  };
 
   const handleTranslate = useCallback(async () => {
     if (!trimmedInput) {
@@ -45,6 +65,7 @@ export default function Home() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'X-Simple-Translator-Client': getClientId(),
         },
         body: JSON.stringify({
           text: trimmedInput,
@@ -73,15 +94,13 @@ export default function Home() {
   }, [isItalianToSpanish, trimmedInput]);
 
   useEffect(() => {
-    if (trimmedInput) {
-      void handleTranslate();
-    } else {
+    if (!trimmedInput) {
       setTranslatedText('');
       setIdioms([]);
       setDescription('');
       setError(null);
     }
-  }, [handleTranslate, trimmedInput]);
+  }, [trimmedInput]);
 
   const handleSampleSelect = (sample: SamplePrompt) => {
     setInputText(sample.text);
@@ -102,10 +121,10 @@ export default function Home() {
       <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-5xl flex-col px-6 pb-16 pt-20 sm:px-10 lg:px-16">
         <header className="mx-auto max-w-2xl text-center">
           <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-            Translator
+            Simple Translator
           </h1>
           <p className="mt-4 text-sm text-neutral-400 sm:text-base">
-            Italian ↔ Spanish translations with idioms and nuance, powered by Gemini 2.5 Flash.
+            Italian ↔ Spanish translations with idioms and nuance, powered by Gemini 3.1 Flash Lite.
           </p>
         </header>
 
@@ -244,7 +263,7 @@ export default function Home() {
         </section>
 
         <footer className="mt-10 flex flex-col items-center gap-1 text-[11px] text-neutral-500 sm:text-xs">
-          <p>Powered by Gemini 2.5 Flash · Italian ↔ Spanish only.</p>
+          <p>Powered by Gemini 3.1 Flash Lite · Italian ↔ Spanish only.</p>
           <p>Built for focused, context-aware collaboration.</p>
         </footer>
       </div>

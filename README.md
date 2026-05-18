@@ -1,146 +1,116 @@
-# AI Traduttore
+<p align="center">
+  <img src="public/simple-translator-logo.svg" alt="Simple Translator logo" width="900">
+</p>
 
-An intelligent AI-powered translator web application built with Next.js, React, and Tailwind CSS, leveraging the Gemini API for Italian-Spanish translations. This application aims to provide context-aware and intelligent translations, offering not just the main translation but also similar idioms and descriptions of the translated text.
+# Simple Translator
 
-## Features
+<p align="center">
+  <strong>A focused Italian-Spanish translator built by Mattia Beltrami, Computer Engineering student at Politecnico di Milano.</strong>
+</p>
 
-- **Intelligent Translation:** Powered by Google Gemini 2.5 Flash model for high-quality, context-aware Italian-Spanish translations.
-- **Idioms and Context:** Provides up to two similar idioms or common phrases and a brief description of the translated text's meaning or context.
-- **Minimalist UI:** Clean, intuitive, and immediate user interface with a dark, Apple-style aesthetic.
-- **Real-time Translation:** Instant translation as you type, with debouncing for efficient API usage.
-- **Language Toggle:** Easy switching between Italian-to-Spanish and Spanish-to-Italian translation directions.
+<p align="center">
+  <a href="https://github.com/beltromatti/simple-translator"><img alt="GitHub repo" src="https://img.shields.io/badge/GitHub-simple--translator-111827?style=for-the-badge&logo=github"></a>
+  <img alt="Next.js" src="https://img.shields.io/badge/Next.js-16-0F172A?style=for-the-badge&logo=nextdotjs">
+  <img alt="Gemini" src="https://img.shields.io/badge/Gemini-3.1_Flash_Lite-1F2937?style=for-the-badge&logo=google">
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-Ready-0B1220?style=for-the-badge&logo=typescript">
+</p>
 
-## Technologies Used
+## What It Is
 
-- **Next.js:** React framework for production.
-- **React:** Frontend library for building user interfaces.
-- **Tailwind CSS:** A utility-first CSS framework for rapid UI development.
-- **TypeScript:** Strongly typed JavaScript.
-- **Google Gemini API:** For AI-powered translation (using `gemini-2.5-flash`).
-- **pnpm:** Fast, disk space efficient package manager.
+Simple Translator is a small, polished web app for translating between Italian and Spanish with practical context. It does not try to be a generic dictionary or a bloated language platform. It focuses on one daily need: turning a sentence into natural language that sounds right on the other side.
 
-## Setup and Installation
+The app returns the main translation, a short explanation of nuance, and up to two related idioms or expressions. That makes it useful for travel, study, work messages, and quick writing decisions where literal translation is not enough.
 
-Follow these steps to get the project up and running on your local machine.
+## Why It Exists
 
-### Prerequisites
+Italian and Spanish are close enough to feel familiar, but that closeness is exactly where mistakes become subtle. False friends, register, tone, and idioms matter. Simple Translator is designed to keep the interface calm while giving the user enough linguistic context to choose better words.
 
-- Node.js (v18 or later)
-- pnpm (install globally: `npm install -g pnpm`)
+This is a personal project by **Mattia Beltrami**, built as a practical AI product rather than a demo. The goal is a translator that feels immediate, useful, and trustworthy in the small moments where language quality matters.
 
-### 1. Clone the repository
+## Tags
 
-```bash
-git clone git@github.com:beltromatti/traduttore.git
-cd traduttore
-```
+`simple-translator` `italian` `spanish` `translation` `gemini` `nextjs` `typescript` `ai-translator` `language-learning` `vercel`
 
-### 2. Install Dependencies
+## Core Experience
 
-```bash
-pnpm install
-```
+- Italian to Spanish and Spanish to Italian translation.
+- Natural phrasing instead of word-by-word output.
+- Short context note for tone, intent, or nuance.
+- Related idioms when they genuinely help.
+- Clean dark interface built for fast use.
+- Server-side Gemini access so API keys are never exposed to the browser.
 
-### 3. Configure Gemini API Key
+## Stack
 
-Create a `.env.local` file in the `traduttore` directory and add your Gemini API key:
+| Layer | Technology |
+| --- | --- |
+| App | Next.js 16, React 19, TypeScript |
+| Styling | Tailwind CSS |
+| AI | Gemini 3.1 Flash Lite |
+| Hosting | Vercel |
+| Runtime protection | Server-side input validation, request limits, and security headers |
 
-```
-NEXT_PUBLIC_GEMINI_API_KEY="YOUR_GEMINI_API_KEY"
-```
+## Local Setup
 
-Replace `YOUR_GEMINI_API_KEY` with the actual API key you obtained from Google AI Studio.
-
-### 4. Run the Development Server
-
-```bash
-pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
-
-## Deployment to Ubuntu Server
-
-This section outlines the steps to deploy your Next.js application to an Ubuntu server for production.
-
-### 1. Build the Application
+Install dependencies:
 
 ```bash
-pnpm build
+npm install
 ```
 
-### 2. Install Production Dependencies
-
-On your Ubuntu server, navigate to your project directory and install production dependencies:
+Create a local environment file:
 
 ```bash
-pnpm install --prod
+cp .env.example .env.local
 ```
 
-### 3. Process Manager (PM2)
-
-Use PM2 to keep your application running continuously.
+Set your server-side Gemini key:
 
 ```bash
-npm install -g pm2
-pm2 start pnpm --name "traduttore-ai" -- start
-pm2 save
-pm2 startup # Follow instructions to set up startup script
+GEMINI_API_KEY="YOUR_GEMINI_API_KEY"
 ```
 
-### 4. Reverse Proxy (Nginx)
+Run the development server:
 
-Configure Nginx to serve your application, handle SSL, and manage traffic.
-
-**Install Nginx:**
 ```bash
-sudo apt update
-sudo apt install nginx
+npm run dev
 ```
 
-**Configure Nginx (e.g., `/etc/nginx/sites-available/traduttore-ai`):**
+Open [http://localhost:3000](http://localhost:3000).
 
-```nginx
-server {
-    listen 80;
-    server_name your_domain.com www.your_domain.com;
+## API
 
-    location / {
-        proxy_pass http://localhost:3000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
+`POST /api/translate`
+
+```json
+{
+  "text": "Vorrei prenotare un tavolo per due persone.",
+  "sourceLang": "it",
+  "targetLang": "es"
 }
 ```
 
-**Enable and Restart Nginx:**
-```bash
-sudo ln -s /etc/nginx/sites-available/traduttore-ai /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl restart nginx
+Response:
+
+```json
+{
+  "translation": "Me gustaría reservar una mesa para dos personas.",
+  "idioms": [],
+  "description": "Una frase educada y natural para hacer una reserva en un restaurante."
+}
 ```
 
-**Set up HTTPS with Certbot:**
-```bash
-sudo snap install core; sudo snap refresh core
-sudo snap install --classic certbot
-sudo ln -s /snap/bin/certbot /usr/bin/certbot
-sudo certbot --nginx -d your_domain.com -d www.your_domain.com
-```
+## Deployment
 
-### 5. Firewall (UFW)
+The app is designed for Vercel. Configure `GEMINI_API_KEY` as a production environment variable and connect the GitHub repository so every push to `main` triggers a public deployment.
 
-```bash
-sudo ufw allow 'Nginx Full'
-sudo ufw enable
-```
+## Author
+
+Built by **Mattia Beltrami**<br>
+Computer Engineering, **Politecnico di Milano**
+
+Simple Translator is intentionally narrow: one translation pair, one fast interface, one useful result. That focus is what makes it practical.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT. See [LICENSE](LICENSE).
