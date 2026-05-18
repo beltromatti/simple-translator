@@ -10,6 +10,7 @@
 
 <p align="center">
   <a href="https://github.com/beltromatti/simple-translator"><img alt="GitHub repo" src="https://img.shields.io/badge/GitHub-simple--translator-111827?style=for-the-badge&logo=github"></a>
+  <a href="https://translator.noesisai.it"><img alt="Live app" src="https://img.shields.io/badge/Live-translator.noesisai.it-0D9488?style=for-the-badge&logo=vercel"></a>
   <img alt="Next.js" src="https://img.shields.io/badge/Next.js-16-0F172A?style=for-the-badge&logo=nextdotjs">
   <img alt="Gemini" src="https://img.shields.io/badge/Gemini-3.1_Flash_Lite-1F2937?style=for-the-badge&logo=google">
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-Ready-0B1220?style=for-the-badge&logo=typescript">
@@ -18,6 +19,8 @@
 ## What It Is
 
 Simple Translator is a small, polished web app for translating between Italian and Spanish with practical context. It does not try to be a generic dictionary or a bloated language platform. It focuses on one daily need: turning a sentence into natural language that sounds right on the other side.
+
+Live app: [translator.noesisai.it](https://translator.noesisai.it)
 
 The app returns the main translation, a short explanation of nuance, and up to two related idioms or expressions. That makes it useful for travel, study, work messages, and quick writing decisions where literal translation is not enough.
 
@@ -102,7 +105,7 @@ Response:
 
 ## Deployment
 
-The app is designed for Vercel. Configure `GEMINI_API_KEY` as a production environment variable and connect the GitHub repository so every push to `main` triggers a public deployment.
+The app is deployed on Vercel at [translator.noesisai.it](https://translator.noesisai.it). Configure `GEMINI_API_KEY` as a production environment variable and connect the GitHub repository so every push to `main` triggers a public deployment.
 
 ## Author
 
